@@ -36,6 +36,14 @@ public class Java2 {
 // 6 задание
         int[] numbers6 = {2, 2, 2, 1, 2, 2, 10, 1};
         System.out.println(checkBalance(numbers6));
+
+// 7 задание
+        int[] numbers7 = {3, 5, 6, 1};
+        int[] numbers8 = { 1, 2, 3 };
+        displacement(numbers7, 2);
+        displacement(numbers8, -1);
+
+
     }
 
     private static int findMin(int[] arr) {
@@ -68,5 +76,25 @@ public class Java2 {
             }
         }
         return false;
+    }
+
+    private static void displacement(int[] arr, int n) {
+        if (n > 0) {
+            for (int i = 0; i < n; i++) {
+                int cache = arr[0];
+                for (int j = 0; j < arr.length - 1; j++) {
+                    arr[j] = arr[j + 1];
+                }
+                arr[arr.length - 1] = cache;
+            }
+        } else {
+            for (int i = n; i < 0; i++) {
+                int cache = arr[arr.length - 1];
+                for (int j = arr.length - 1; j > 0 ; j--) {
+                    arr[j] = arr[j - 1];
+                }
+                arr[0] = cache;
+            }
+        }
     }
 }
