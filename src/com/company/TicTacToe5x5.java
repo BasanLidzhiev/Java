@@ -63,6 +63,7 @@ public class TicTacToe5x5 {
             for (int j = 1; j < chars.length && result; j++)
                 result = chars[j] == sign;
             if (result) return true;
+            result = true;
         }
 
         result = true;
@@ -70,21 +71,22 @@ public class TicTacToe5x5 {
             for (int j = 0; j < chars.length-1 && result; j++)
                 result = chars[j] == sign;
             if (result) return true;
+            result = true;
         }
 
         // Vertical
-        result = true;
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[i].length - 1 && result; j++)
                 result = field[j][i] == sign;
             if (result) return true;
+            result = true;
         }
 
-        result = true;
         for (int i = 0; i < field.length; i++) {
             for (int j = 1; j < field[i].length && result; j++)
                 result = field[j][i] == sign;
             if (result) return true;
+            result = true;
         }
 
         // Diagonal
