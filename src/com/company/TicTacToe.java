@@ -57,28 +57,34 @@ public class TicTacToe {
 
     static boolean checkWin(char[][] field, char sign) {
         // Horizontal
-        for (int i = 0; i < field.length; i++) {
-            if (field[i][0] == sign && field[i][1] == sign && field[i][2] == sign) {
-                return true;
-            }
+        boolean result = true;
+
+        for (char[] chars : field) {
+            for (int j = 0; j < chars.length && result; j++)
+                result = chars[j] == sign;
+            if (result) return true;
         }
 
         // Vertical
+        result = true;
         for (int i = 0; i < field.length; i++) {
-            if (field[0][i] == sign && field[1][i] == sign && field[2][i] == sign) {
-                return true;
-            }
+            for (int j = 0; j < field[i].length && result; j++)
+                result = field[j][i] == sign;
+            if (result) return true;
         }
 
         // Diagonal
-        if (field[0][0] == sign && field[1][1] == sign && field[2][2] == sign) {
-            return true;
+        result = true;
+        for (int i = 0; i < field.length && result; i++) {
+            result = field[i][i] == sign;
         }
+        if (result) return true;
 
-        if (field[0][2] == sign && field[1][1] == sign && field[2][0] == sign) {
-            return true;
+        result = true;
+        for (int i = 0; i < field.length && result; i++) {
+            result = field[i][field.length - 1 - i] == sign;
         }
-
+        if (result) return true;
         return false;
     }
 
@@ -123,7 +129,7 @@ public class TicTacToe {
     }
 
     static char[][] createField() {
-        return new char[][] {
+        return new char[][]{
                 {'-', '-', '-'},
                 {'-', '-', '-'},
                 {'-', '-', '-'}
