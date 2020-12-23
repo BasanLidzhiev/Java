@@ -63,18 +63,19 @@ public class TicTacToe {
             for (int j = 0; j < chars.length && result; j++)
                 result = chars[j] == sign;
             if (result) return true;
+            result = true;
         }
 
         // Vertical
-        result = true;
+
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field[i].length && result; j++)
                 result = field[j][i] == sign;
             if (result) return true;
+            result = true;
         }
 
         // Diagonal
-        result = true;
         for (int i = 0; i < field.length && result; i++) {
             result = field[i][i] == sign;
         }
@@ -105,6 +106,78 @@ public class TicTacToe {
         Random random = new Random();
         int x, y;
 
+        if (winningMove(field)) {
+            drawField(field);
+            drawSeparator();
+            return;
+        }
+
+        int counter = 0;
+        // Horizontal
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[i].length; j++) {
+                if (field[i][j] == 'X') counter++;
+            }
+            if (counter == 2) {
+                for (int j = 0; j < field[i].length; j++) {
+                    if (field[i][j] == '-') {
+                        field[i][j] = 'O';
+                        drawField(field);
+                        drawSeparator();
+                        return;
+                    }
+                }
+            }
+            counter = 0;
+        }
+
+//        // Vertical
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[i].length; j++) {
+                if (field[j][i] == 'X') counter++;
+            }
+            if (counter == 2) {
+                for (int j = 0; j < field[i].length; j++) {
+                    if (field[j][i] == '-') {
+                        field[j][i] = 'O';
+                        drawField(field);
+                        drawSeparator();
+                        return;
+                    }
+                }
+            }
+            counter = 0;
+        }
+
+        for (int i = 0; i < field.length; i++) {
+            if (field[i][i] == 'X') counter++;
+        }
+        if (counter == 2) {
+            for (int i = 0; i < field.length; i++) {
+                if (field[i][i] == '-') {
+                    field[i][i] = 'O';
+                    drawField(field);
+                    drawSeparator();
+                    return;
+                }
+            }
+        }
+        counter = 0;
+
+        for (int i = 0; i < field.length; i++) {
+            if (field[i][field.length - 1 - i] == 'X') counter++;
+        }
+        if (counter == 2) {
+            for (int i = 0; i < field.length; i++) {
+                if (field[i][field.length - 1 - i] == '-') {
+                    field[i][field.length - 1 - i] = 'O';
+                    drawField(field);
+                    drawSeparator();
+                    return;
+                }
+            }
+        }
+
         do {
             x = random.nextInt(field.length);
             y = random.nextInt(field.length);
@@ -113,6 +186,67 @@ public class TicTacToe {
         field[x][y] = 'O';
         drawField(field);
         drawSeparator();
+    }
+
+    static boolean winningMove(char[][] field) {
+        int counter = 0;
+
+//        Horizontal
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[i].length; j++) {
+                if (field[i][j] == 'O') counter++;
+            }
+            if (counter == 2) {
+                for (int j = 0; j < field[i].length; j++) {
+                    if (field[i][j] == '-') {
+                        field[i][j] = 'O';
+                        return true;
+                    }
+                }
+            }
+            counter = 0;
+        }
+//      Vertical
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[i].length; j++) {
+                if (field[j][i] == 'O') counter++;
+            }
+            if (counter == 2) {
+                for (int j = 0; j < field[i].length; j++) {
+                    if (field[j][i] == '-') {
+                        field[j][i] = 'O';
+                        return true;
+                    }
+                }
+            }
+            counter = 0;
+        }
+//      Diagonal
+        for (int i = 0; i < field.length; i++) {
+            if (field[i][i] == 'O') counter++;
+        }
+        if (counter == 2) {
+            for (int i = 0; i < field.length; i++) {
+                if (field[i][i] == '-') {
+                    field[i][i] = 'O';
+                    return true;
+                }
+            }
+        }
+        counter = 0;
+        for (int i = 0; i < field.length; i++) {
+            if (field[i][field.length - 1 - i] == 'O') counter++;
+        }
+        if (counter == 2) {
+            for (int i = 0; i < field.length; i++) {
+                if (field[i][field.length - 1 - i] == '-') {
+                    field[i][field.length - 1 - i] = 'O';
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     static int chooseCoordinate(int maxLength, char sign) {
