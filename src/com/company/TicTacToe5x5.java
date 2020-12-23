@@ -3,7 +3,7 @@ package com.company;
 import java.util.Random;
 import java.util.Scanner;
 
-public class TicTacToe {
+public class TicTacToe5x5 {
     public static void main(String[] args) {
         start();
     }
@@ -60,7 +60,14 @@ public class TicTacToe {
         boolean result = true;
 
         for (char[] chars : field) {
-            for (int j = 0; j < chars.length && result; j++)
+            for (int j = 1; j < chars.length && result; j++)
+                result = chars[j] == sign;
+            if (result) return true;
+        }
+
+        result = true;
+        for (char[] chars : field) {
+            for (int j = 0; j < chars.length-1 && result; j++)
                 result = chars[j] == sign;
             if (result) return true;
         }
@@ -68,23 +75,43 @@ public class TicTacToe {
         // Vertical
         result = true;
         for (int i = 0; i < field.length; i++) {
-            for (int j = 0; j < field[i].length && result; j++)
+            for (int j = 0; j < field[i].length - 1 && result; j++)
+                result = field[j][i] == sign;
+            if (result) return true;
+        }
+
+        result = true;
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 1; j < field[i].length && result; j++)
                 result = field[j][i] == sign;
             if (result) return true;
         }
 
         // Diagonal
         result = true;
-        for (int i = 0; i < field.length && result; i++) {
+        for (int i = 0; i < field.length - 1 && result; i++) {
             result = field[i][i] == sign;
         }
         if (result) return true;
 
         result = true;
-        for (int i = 0; i < field.length && result; i++) {
+        for (int i = 1; i < field.length && result; i++) {
+            result = field[i][i] == sign;
+        }
+        if (result) return true;
+
+        result = true;
+        for (int i = 0; i < field.length - 1 && result; i++) {
+            result = field[i][field.length - 1 - i] == sign;
+        }
+        if (result) return true;
+
+        result = true;
+        for (int i = 1; i < field.length && result; i++) {
             result = field[i][field.length - 1 - i] == sign;
         }
         return result;
+
     }
 
     static void doPlayerMove(char[][] field) {
@@ -129,9 +156,11 @@ public class TicTacToe {
 
     static char[][] createField() {
         return new char[][]{
-                {'-', '-', '-'},
-                {'-', '-', '-'},
-                {'-', '-', '-'}
+                {'-', '-', '-', '-', '-'},
+                {'-', '-', '-', '-', '-'},
+                {'-', '-', '-', '-', '-'},
+                {'-', '-', '-', '-', '-'},
+                {'-', '-', '-', '-', '-'}
         };
     }
 
